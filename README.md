@@ -15,7 +15,7 @@
 | PHP | **8.2+** | 必须，低于此版本无法运行 |
 | MySQL | 5.7+ / 8.0 / MariaDB 10.3+ | 数据库 |
 | Nginx | 任意较新版 | Web 服务器 |
-| Node.js | 18+ | 仅在需要重新构建前端时使用 |
+| Node.js | **20.19+ 或 22.12+** | 可选，仅在需要重新构建前端时使用 |
 
 PHP 扩展：`pdo_mysql`、`mbstring`、`openssl`、`fileinfo`、`ctype`、`json`、
 `bcmath`、`tokenizer`、`xml`、`zip`、`curl`
@@ -70,7 +70,13 @@ npm install --no-package-lock
 npm run build
 ```
 
-产物在 `public/build/`。服务器没有 Node 时，本地构建后上传该目录即可。
+产物在 `public/build/`。
+
+> **注意**：`public/build/` 已随仓库提供，**通常不需要执行这一步**。
+> 只有在修改了 `resources/` 下的前端源码时才需要重新构建。
+>
+> 若必须构建，Node 版本需为 **20.19+ 或 22.12+**（Vite 7 的硬性要求）。
+> 版本过低会报 `Vite requires Node.js version 20.19+`。
 
 ### 6. 运行安装向导
 
