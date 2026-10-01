@@ -1,0 +1,203 @@
+{
+  "version": "v1",
+  "source": "App\\Enums\\ApiErrorCode.php",
+  "description": "CardKey API v1 shared error-code mirror. Do not treat messages as secrets or as an automatic retry policy.",
+  "codes": [
+    {
+      "name": "Success",
+      "code": 0,
+      "message": "操作成功",
+      "http_status": 200,
+      "category": "success"
+    },
+    {
+      "name": "InvalidParams",
+      "code": 1001,
+      "message": "请求参数不合法",
+      "http_status": 422,
+      "category": "auth"
+    },
+    {
+      "name": "AppNotFound",
+      "code": 1002,
+      "message": "AppID 不存在",
+      "http_status": 401,
+      "category": "auth"
+    },
+    {
+      "name": "AppDisabled",
+      "code": 1003,
+      "message": "应用已被禁用",
+      "http_status": 401,
+      "category": "auth"
+    },
+    {
+      "name": "SignatureInvalid",
+      "code": 1004,
+      "message": "签名验证失败",
+      "http_status": 401,
+      "category": "auth"
+    },
+    {
+      "name": "TimestampExpired",
+      "code": 1005,
+      "message": "请求时间戳超出允许范围",
+      "http_status": 401,
+      "category": "auth"
+    },
+    {
+      "name": "NonceReused",
+      "code": 1006,
+      "message": "随机数已被使用（疑似重放请求）",
+      "http_status": 401,
+      "category": "auth"
+    },
+    {
+      "name": "IpNotAllowed",
+      "code": 1007,
+      "message": "IP 不在白名单内",
+      "http_status": 401,
+      "category": "auth"
+    },
+    {
+      "name": "RateLimited",
+      "code": 1008,
+      "message": "请求过于频繁，请稍后再试",
+      "http_status": 429,
+      "category": "auth"
+    },
+    {
+      "name": "DailyQuotaExceeded",
+      "code": 1009,
+      "message": "今日调用配额已用尽",
+      "http_status": 429,
+      "category": "auth"
+    },
+    {
+      "name": "MissingCredentials",
+      "code": 1010,
+      "message": "缺少必要的认证头",
+      "http_status": 422,
+      "category": "auth"
+    },
+    {
+      "name": "DecryptFailed",
+      "code": 1011,
+      "message": "卡密解密失败，请检查加密参数",
+      "http_status": 422,
+      "category": "auth"
+    },
+    {
+      "name": "CardNotFound",
+      "code": 2001,
+      "message": "卡密不存在",
+      "http_status": 404,
+      "category": "card"
+    },
+    {
+      "name": "CardDisabled",
+      "code": 2002,
+      "message": "卡密已被禁用",
+      "http_status": 200,
+      "category": "card"
+    },
+    {
+      "name": "CardExpired",
+      "code": 2003,
+      "message": "卡密已过期",
+      "http_status": 200,
+      "category": "card"
+    },
+    {
+      "name": "CardNotActivated",
+      "code": 2004,
+      "message": "卡密尚未激活",
+      "http_status": 200,
+      "category": "card"
+    },
+    {
+      "name": "CardDepleted",
+      "code": 2005,
+      "message": "卡密次数已用完",
+      "http_status": 200,
+      "category": "card"
+    },
+    {
+      "name": "CardAlreadyActivated",
+      "code": 2006,
+      "message": "卡密已被激活",
+      "http_status": 200,
+      "category": "card"
+    },
+    {
+      "name": "DeviceMismatch",
+      "code": 2007,
+      "message": "设备不匹配，该卡密已绑定其他设备",
+      "http_status": 200,
+      "category": "card"
+    },
+    {
+      "name": "DeviceNotBound",
+      "code": 2008,
+      "message": "该卡密尚未绑定任何设备",
+      "http_status": 404,
+      "category": "card"
+    },
+    {
+      "name": "CardNotBoundToApp",
+      "code": 2009,
+      "message": "该卡密不属于当前应用",
+      "http_status": 200,
+      "category": "card"
+    },
+    {
+      "name": "CardTypeUnsupported",
+      "code": 2010,
+      "message": "当前卡密类型不支持该操作",
+      "http_status": 200,
+      "category": "card"
+    },
+    {
+      "name": "CardAlreadyDisabled",
+      "code": 2011,
+      "message": "卡密已处于禁用状态",
+      "http_status": 200,
+      "category": "card"
+    },
+    {
+      "name": "NotFound",
+      "code": 4004,
+      "message": "接口不存在",
+      "http_status": 404,
+      "category": "request"
+    },
+    {
+      "name": "MethodNotAllowed",
+      "code": 4005,
+      "message": "请求方法不被允许",
+      "http_status": 405,
+      "category": "request"
+    },
+    {
+      "name": "PayloadTooLarge",
+      "code": 4013,
+      "message": "请求体过大",
+      "http_status": 413,
+      "category": "request"
+    },
+    {
+      "name": "ServerError",
+      "code": 5000,
+      "message": "服务器内部错误",
+      "http_status": 500,
+      "category": "server"
+    },
+    {
+      "name": "Maintenance",
+      "code": 5003,
+      "message": "系统维护中",
+      "http_status": 503,
+      "category": "server"
+    }
+  ]
+}

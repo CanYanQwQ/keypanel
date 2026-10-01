@@ -1,0 +1,13 @@
+{
+  "name": "transport-v1-synthetic",
+  "description": "Synthetic vector only; AES-GCM test data, not a production credential.",
+  "app_id": "ak_test_0000000000000000",
+  "app_secret": "sk_test_secret_for_vectors_do_not_use",
+  "info": "cardkey-enc-v1",
+  "plaintext": "ABCD-EFGH-JKMN-PQRS",
+  "key_hex": "bff2fbbc96525ad71f7e1492b39e1eb22fc76915f55a452dae9c7bd8e8ce8a2a",
+  "iv": "AAECAwQFBgcICQoL",
+  "aad": "ak_test_0000000000000000",
+  "data": "Dpzc19OrLLuiUzBnVjZ58nx01g==",
+  "tag": "OgQTxDEviBNBjrGdUcPfPw=="
+}

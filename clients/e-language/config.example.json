@@ -1,0 +1,7 @@
+{
+  "base_url": "https://example.invalid",
+  "app_id": "REPLACE_WITH_APP_ID",
+  "app_secret": "REPLACE_WITH_APP_SECRET",
+  "require_signed_responses": true,
+  "crypto_dll": "REPLACE_WITH_APPROVED_SIGNED_DLL_PATH"
+}

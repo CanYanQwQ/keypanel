@@ -1,0 +1,41 @@
+*.log
+.DS_Store
+.env
+.env.backup
+.env.production
+.phpactor.json
+.phpunit.result.cache
+/.fleet
+/.idea
+/.nova
+/.phpunit.cache
+/.vscode
+/.zed
+/auth.json
+/node_modules
+/public/css/filament
+/public/fonts/filament
+/public/hot
+/public/js/filament
+/public/storage
+/storage/*.key
+/storage/pail
+/vendor
+Homestead.json
+Homestead.yaml
+Thumbs.db
+.handoffs/
+
+# 安装锁（安装完成后生成，不应提交）
+/install.lock
+
+# 备份文件
+*.sqlite
+*.sqlite-journal
+
+# ---------------------------------------------------------------------------
+#  说明：
+#    /vendor        —— Composer 依赖，部署时执行 composer install 生成
+#    /node_modules  —— 前端开发依赖，部署时执行 npm install 生成
+#    public/build   —— 前端构建产物，体积小且后台样式依赖它，故纳入版本控制
+# ---------------------------------------------------------------------------

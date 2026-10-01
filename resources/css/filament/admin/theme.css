@@ -1,0 +1,81 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+/* Keep the admin panel content readable without card-on-card framing. */
+.fi-panel-admin {
+    .app-form-layout {
+        width: 100%;
+        max-width: 56rem;
+        margin-inline: auto;
+    }
+
+    .app-form-layout .fi-section,
+    .app-form-layout .fi-sc-component,
+    .app-form-layout .fi-input-wrp,
+    .app-form-layout .fi-select,
+    .app-form-layout .fi-tags-input {
+        width: 100%;
+        max-width: none;
+    }
+
+    .app-form-layout .fi-section + .fi-section {
+        margin-top: 2.5rem;
+    }
+
+    .fi-section:not(.fi-aside) {
+        background: transparent;
+        border-radius: 0;
+        box-shadow: none;
+        ring: 0;
+    }
+
+    .fi-section:not(.fi-aside) > .fi-section-header {
+        padding-inline: 0;
+    }
+
+    .fi-section:not(.fi-aside) > .fi-section-content-ctn > .fi-section-content {
+        padding-inline: 0;
+    }
+
+    .fi-section.fi-section-has-header:not(.fi-collapsed) > .fi-section-content-ctn {
+        border-top: 0;
+    }
+
+    .fi-ta-ctn {
+        background: transparent;
+        border-radius: 0;
+        box-shadow: none;
+        ring: 0;
+    }
+
+    .fi-wi-stats-overview-stat {
+        background: transparent;
+        border-radius: 0;
+        box-shadow: none;
+        ring: 0;
+        padding-inline: 0;
+    }
+
+    .fi-sc-wizard:not(.fi-contained) .fi-sc-wizard-header {
+        background: transparent;
+        border-radius: 0;
+        box-shadow: none;
+        ring: 0;
+    }
+
+    .fi-sc-wizard:not(.fi-contained) .fi-sc-wizard-step.fi-active {
+        margin-top: 1.5rem;
+    }
+
+    .fi-sc-wizard:not(.fi-contained) .fi-sc-wizard-footer {
+        margin-top: 1.5rem;
+    }
+}
+
+.dark .fi-panel-admin {
+    .fi-section:not(.fi-aside),
+    .fi-ta-ctn,
+    .fi-wi-stats-overview-stat,
+    .fi-sc-wizard:not(.fi-contained) .fi-sc-wizard-header {
+        background: transparent;
+    }
+}

@@ -1,0 +1,122 @@
+# ============================================================================
+#  卡密验证模板 —— Android CMake 构建配置
+#
+#  在 Android Studio 的 app/src/main/cpp/CMakeLists.txt 中这样用：
+#
+#      # 指向本模板所在目录
+#      set(CARDKEY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/卡密验证模板)
+#      include(${CARDKEY_DIR}/安卓CMake.txt)
+#
+#      add_library(cardkey SHARED
+#          ${CARDKEY_SOURCES}
+#          your_jni_entry.cpp        # 你的 JNI 入口
+#      )
+#      target_include_directories(cardkey PRIVATE ${CARDKEY_INCLUDE_DIRS})
+#      target_link_libraries(cardkey ${CARDKEY_LIBS})
+#
+#  或命令行构建：
+#
+#      cmake -S . -B build-android \
+#            -DCMAKE_TOOLCHAIN_FILE=$NDK/build/cmake/android.toolchain.cmake \
+#            -DANDROID_ABI=arm64-v8a \
+#            -DANDROID_PLATFORM=android-21 \
+#            -DCMAKE_BUILD_TYPE=Release
+#      cmake --build build-android
+#
+#  ---------------------------------------------------------------------------
+#  ⚠ 中文路径注意
+#
+#  NDK 的 clang++.cmd 包装脚本无法处理中文路径（实测会报
+#  "no such file or directory"）。两种解决办法：
+#
+#    方案 A（推荐）：用 CMake + Ninja 构建。Android Studio 默认走这条路，
+#                    不受影响。
+#    方案 B：把「卡密」目录改名为 cardkey，并把所有
+#            #include "卡密/xxx.h" 替换为 #include "cardkey/xxx.h"。
+#            本文件已按「卡密」命名编写，改名前请先确认。
+#  ---------------------------------------------------------------------------
+# ============================================================================
+
+# ---- 源文件清单 ----
+set(CARDKEY_SOURCES
+    ${CARDKEY_DIR}/源码/平台剪贴板.cpp
+)
+
+# 如果你的工程需要 JNI 接入示例作为起点，取消下面注释
+# set(CARDKEY_SOURCES ${CARDKEY_SOURCES} ${CARDKEY_DIR}/源码/安卓接入示例.cpp)
+
+# 如果你的工程需要「需要的代码.cpp」里的会话与安全封装，取消下面注释
+# set(CARDKEY_SOURCES ${CARDKEY_SOURCES} ${CARDKEY_DIR}/需要的代码.cpp)
+
+# ---- 头文件搜索路径 ----
+set(CARDKEY_INCLUDE_DIRS
+    ${CARDKEY_DIR}
+)
+
+# ---- 链接库 ----
+# 本模板零第三方依赖，只需系统库：
+#   android —— __android_log_print 等
+#   log     —— 日志
+#   网络走标准 socket，无需额外库
+set(CARDKEY_LIBS
+    android
+    log
+)
+
+# ============================================================================
+#  编译选项
+# ============================================================================
+
+# 中文标识符与字符串需要 UTF-8
+add_compile_options(-finput-charset=UTF-8 -fexec-charset=UTF-8)
+
+add_compile_options(
+    -Wall
+    -Wextra
+    -fvisibility=hidden           # 只导出 JNI 符号，隐藏内部实现
+    -fvisibility-inlines-hidden
+)
+
+# ---- Release：开启全部防护 ----
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    add_compile_definitions(CARDKEY_HARDENED=1)
+
+    # 字符串加密依赖编译器常量折叠，必须开优化
+    add_compile_options(-O2)
+
+    # 去掉调试符号，让逆向者看不到函数名
+    add_link_options(-Wl,--strip-all)
+    add_link_options(-Wl,--exclude-libs,ALL)
+    add_link_options(-Wl,-z,relro -Wl,-z,now)   # 只读重定位，防 GOT 覆写
+endif()
+
+# ---- Debug：关闭检测，避免干扰自己的调试器 ----
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    add_compile_definitions(CARDKEY_HARDENED=0)
+endif()
+
+# ============================================================================
+#  进一步加固（可选）
+#
+#  1. OLLVM 混淆（需要自己编译带 OLLVM 的 NDK）
+#       add_compile_options(-mllvm -fla)   # 控制流平坦化
+#       add_compile_options(-mllvm -sub)   # 指令替换
+#       add_compile_options(-mllvm -bcf)   # 虚假控制流
+#
+#  2. 加壳：梆梆 / 爱加密 / 腾讯乐固（商业方案，效果最明显）
+#
+#  3. build.gradle 中开启代码混淆：
+#       android {
+#           buildTypes {
+#               release {
+#                   minifyEnabled true
+#                   shrinkResources true
+#                   proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+#                                 'proguard-rules.pro'
+#               }
+#           }
+#       }
+#
+#  4. 务必开启 APK 签名校验（本模板已提供，见 卡密/签名校验.h），
+#     这是对抗二次打包最有效的手段。
+# ============================================================================

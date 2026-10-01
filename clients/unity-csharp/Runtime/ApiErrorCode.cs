@@ -1,0 +1,33 @@
+namespace CardKey.Unity;
+
+public enum ApiErrorCode
+{
+    Success = 0,
+    InvalidParams = 1001,
+    AppNotFound = 1002,
+    AppDisabled = 1003,
+    SignatureInvalid = 1004,
+    TimestampExpired = 1005,
+    NonceReused = 1006,
+    IpNotAllowed = 1007,
+    RateLimited = 1008,
+    DailyQuotaExceeded = 1009,
+    MissingCredentials = 1010,
+    DecryptFailed = 1011,
+    CardNotFound = 2001,
+    CardDisabled = 2002,
+    CardExpired = 2003,
+    CardNotActivated = 2004,
+    CardDepleted = 2005,
+    CardAlreadyActivated = 2006,
+    DeviceMismatch = 2007,
+    DeviceNotBound = 2008,
+    CardNotBoundToApp = 2009,
+    CardTypeUnsupported = 2010,
+    CardAlreadyDisabled = 2011,
+    NotFound = 4004,
+    MethodNotAllowed = 4005,
+    PayloadTooLarge = 4013,
+    ServerError = 5000,
+    Maintenance = 5003,
+}

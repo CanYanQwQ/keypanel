@@ -1,0 +1,17 @@
+{
+  "name": "com.cardkey.api-client",
+  "displayName": "CardKey API v1 Client",
+  "version": "1.0.0",
+  "unity": "2022.3",
+  "description": "Standalone CardKey API v1 UnityWebRequest sample client.",
+  "author": {
+    "name": "CardKey example"
+  },
+  "samples": [
+    {
+      "displayName": "CardKey API sample",
+      "description": "Minimal runtime usage example.",
+      "path": "Samples"
+    }
+  ]
+}

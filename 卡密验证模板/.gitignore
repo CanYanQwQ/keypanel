@@ -1,0 +1,22 @@
+# 编译产物
+build/
+*.o
+*.obj
+*.exe
+*.out
+*.a
+*.lib
+*.pdb
+*.ilk
+
+# ImGui 运行时生成的窗口布局
+imgui.ini
+
+# IDE
+.vs/
+.idea/
+*.user
+
+# 本地凭据（切勿提交）
+.env
+.env.local

@@ -1,0 +1,15 @@
+{
+  "name": "cardkey/api-client-example",
+  "description": "Independent CardKey API v1 PHP client example",
+  "type": "library",
+  "license": "MIT",
+  "require": {
+    "php": ">=8.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "CardKey\\": "src/CardKey/"
+    }
+  },
+  "bin": ["bin/cardkey-example"]
+}

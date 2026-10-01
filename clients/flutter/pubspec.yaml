@@ -1,0 +1,16 @@
+name: cardkey_client_example
+description: Independent CardKey API v1 Dart client example.
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ">=3.2.0 <4.0.0"
+
+dependencies:
+  http: ^1.2.2
+  crypto: ^3.0.5
+  cryptography: ^2.7.0
+
+dev_dependencies:
+  test: ^1.25.8
+  lints: ^4.0.0

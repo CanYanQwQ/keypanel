@@ -1,0 +1,14 @@
+{
+  "name": "signature-v1-synthetic",
+  "description": "Synthetic vector only; never use these credentials in production.",
+  "app_id": "ak_test_0000000000000000",
+  "app_secret": "sk_test_secret_for_vectors_do_not_use",
+  "method": "POST",
+  "path": "/api/v1/verify",
+  "timestamp": "1700000000",
+  "nonce": "00112233445566778899aabbccddeeff",
+  "raw_body": "{\"card_key\":\"ABCD-EFGH-JKMN-PQRS\",\"device_id\":\"device-001\"}",
+  "body_sha256": "d4c470b7b50e407cd4b6bed475392c8da2b45fd470d238fab0b6f4ae4c9861bb",
+  "canonical": "POST\n/api/v1/verify\n1700000000\n00112233445566778899aabbccddeeff\nd4c470b7b50e407cd4b6bed475392c8da2b45fd470d238fab0b6f4ae4c9861bb",
+  "signature": "cdce8f8c1999966d94530a5d7c6c7fe5d4c6e84c8b89388386473f0dfeb3a60e"
+}
