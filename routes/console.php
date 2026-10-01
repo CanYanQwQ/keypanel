@@ -251,65 +251,74 @@ Artisan::command('cardkey:backup', function () {
     $this->info("备份创建成功：{$filename}");
 })->purpose('加密备份数据库（mysqldump + AES-256-CBC）');
 
+
 /**
  * 查找 mysqldump 可执行文件。
  *
  * 宝塔面板安装的 MySQL 不会把 mysqldump 加入 PATH，
  * 因此按常见安装位置依次探测。
+ *
+ * 用 function_exists 守卫的原因：Laravel 在执行 optimize / config:cache 等命令时
+ * 可能重复加载本文件，裸函数声明会触发 "Cannot redeclare" 致命错误。
  */
-function findMysqldumpBinary(): ?string
-{
-    // 优先使用配置中显式指定的路径
-    $configured = config('cardkey.backup.mysqldump');
+if (! function_exists('findMysqldumpBinary')) {
+    function findMysqldumpBinary(): ?string
+    {
+        // 优先使用配置中显式指定的路径
+        $configured = config('cardkey.backup.mysqldump');
 
-    if (is_string($configured) && $configured !== '' && is_executable($configured)) {
-        return $configured;
-    }
-
-    $candidates = [
-        '/usr/bin/mysqldump',
-        '/usr/local/bin/mysqldump',
-        '/usr/local/mysql/bin/mysqldump',
-        '/www/server/mysql/bin/mysqldump',
-        '/www/server/mariadb/bin/mysqldump',
-    ];
-
-    // 宝塔的 MySQL 可能带版本号目录，例如 /www/server/mysql-5.7/bin/
-    foreach (glob('/www/server/mysql*/bin/mysqldump') ?: [] as $found) {
-        $candidates[] = $found;
-    }
-    foreach (glob('/www/server/mariadb*/bin/mysqldump') ?: [] as $found) {
-        $candidates[] = $found;
-    }
-
-    foreach ($candidates as $candidate) {
-        if (is_file($candidate) && is_executable($candidate)) {
-            return $candidate;
+        if (is_string($configured) && $configured !== '' && is_executable($configured)) {
+            return $configured;
         }
-    }
 
-    // 最后尝试 PATH 中的命令
-    $which = @shell_exec('command -v mysqldump 2>/dev/null');
-    if (is_string($which) && trim($which) !== '') {
-        return trim($which);
-    }
+        $candidates = [
+            '/usr/bin/mysqldump',
+            '/usr/local/bin/mysqldump',
+            '/usr/local/mysql/bin/mysqldump',
+            '/www/server/mysql/bin/mysqldump',
+            '/www/server/mariadb/bin/mysqldump',
+        ];
 
-    return null;
+        // 宝塔的 MySQL 可能带版本号目录，例如 /www/server/mysql-5.7/bin/
+        foreach (glob('/www/server/mysql*/bin/mysqldump') ?: [] as $found) {
+            $candidates[] = $found;
+        }
+        foreach (glob('/www/server/mariadb*/bin/mysqldump') ?: [] as $found) {
+            $candidates[] = $found;
+        }
+
+        foreach ($candidates as $candidate) {
+            if (is_file($candidate) && is_executable($candidate)) {
+                return $candidate;
+            }
+        }
+
+        // 最后尝试 PATH 中的命令
+        $which = @shell_exec('command -v mysqldump 2>/dev/null');
+
+        if (is_string($which) && trim($which) !== '') {
+            return trim($which);
+        }
+
+        return null;
+    }
 }
 
 /**
  * 把字节数格式化为可读文本。
  */
-function formatBytes(int $bytes): string
-{
-    $units = ['B', 'KB', 'MB', 'GB'];
-    $index = 0;
-    $value = (float) $bytes;
+if (! function_exists('formatBytes')) {
+    function formatBytes(int $bytes): string
+    {
+        $units = ['B', 'KB', 'MB', 'GB'];
+        $index = 0;
+        $value = (float) $bytes;
 
-    while ($value >= 1024 && $index < count($units) - 1) {
-        $value /= 1024;
-        $index++;
+        while ($value >= 1024 && $index < count($units) - 1) {
+            $value /= 1024;
+            $index++;
+        }
+
+        return round($value, $index === 0 ? 0 : 1) . ' ' . $units[$index];
     }
-
-    return round($value, $index === 0 ? 0 : 1) . ' ' . $units[$index];
 }
