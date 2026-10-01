@@ -615,6 +615,9 @@ function writeEnvFile(array $input): void
         'DB_USERNAME'  => $input['db_user'],
         'DB_PASSWORD'  => quoteEnv($input['db_pass']),
         'SESSION_DRIVER'   => 'file',
+        // 显式指定 cookie 名：中文 APP_NAME 经 Str::slug() 会变空串，
+        // 导致 cookie 名退化为 "-session"，部分环境下会话无法保持
+        'SESSION_COOKIE'   => 'cardkey_session',
         'CACHE_STORE'      => 'database',
         'QUEUE_CONNECTION' => 'database',
         'BACKUP_ENCRYPTION_PASSWORD' => quoteEnv($input['backup_pass']),

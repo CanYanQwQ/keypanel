@@ -127,9 +127,24 @@ return [
     |
     */
 
+    /*
+    |--------------------------------------------------------------------------
+    | Session Cookie Name
+    |--------------------------------------------------------------------------
+    |
+    | 注意：这里不能直接用 Str::slug(APP_NAME)。
+    |
+    | 当 APP_NAME 是全中文（例如「卡密管理系统」）时，Str::slug() 会返回空串，
+    | cookie 名退化为 "-session"（以短横线开头）。这种 cookie 名在部分浏览器
+    | 与 CDN 组合下会被丢弃或无法正确回传，导致会话无法保持、登录后跳不回后台。
+    |
+    | 因此这里加一个兜底：当 slug 结果为空时使用固定的 'cardkey' 前缀。
+    |
+    */
+
     'cookie' => env(
         'SESSION_COOKIE',
-        Str::slug((string) env('APP_NAME', 'laravel')).'-session'
+        (Str::slug((string) env('APP_NAME', 'laravel')) ?: 'cardkey').'-session'
     ),
 
     /*
